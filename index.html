@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第五章数据可视化平台 - 022340614</title>
+    <title>第六章坐标轴定制平台 - 022340614</title>
     <meta name="author" content="022340614">
-    <meta name="description" content="基于第五章精确数据的子图绘制与布局管理 - 安全稳定版本">
+    <meta name="description" content="基于第六章坐标轴定制技术的数据可视化平台 - 安全稳定版本">
     
     <!-- 安全头 -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.plot.ly 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
@@ -204,6 +204,44 @@
             background: #f8fafc;
         }
 
+        /* 控制面板 */
+        .control-panel {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .control-group {
+            margin: 1rem 0;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .slider {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
         /* 按钮样式 */
         .btn {
             padding: 0.875rem 1.75rem;
@@ -252,52 +290,22 @@
             margin-top: 3rem;
         }
 
-        .footer p {
-            margin: 0.5rem 0;
-        }
-
         /* 响应式设计 */
         @media (max-width: 768px) {
             .chart-container {
                 height: 300px;
             }
-            
             .nav {
                 flex-direction: column;
             }
-            
             .nav-btn {
                 width: 100%;
                 text-align: center;
             }
-            
             .section {
                 padding: 1.5rem;
                 margin: 0 -1rem 1.5rem;
                 border-radius: 0;
-            }
-            
-            .hero {
-                padding: 2rem 0;
-            }
-            
-            .data-table {
-                font-size: 0.875rem;
-            }
-            
-            .data-table th, .data-table td {
-                padding: 0.75rem 0.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .chart-container {
-                height: 250px;
-            }
-            
-            .btn {
-                width: 100%;
-                margin: 0.25rem 0;
             }
         }
 
@@ -315,37 +323,21 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* 错误状态 */
-        .error {
-            background: var(--error);
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .success {
-            background: var(--success);
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="container">
             <a href="#" class="logo">
-                <span>📊</span>
-                <span>第五章数据可视化</span>
+                <span>📐</span>
+                <span>第六章坐标轴定制</span>
             </a>
             <nav class="nav">
-                <a href="#section5-1" class="nav-btn active">5.1 固定区域子图</a>
-                <a href="#section5-2" class="nav-btn">5.2 自定义区域子图</a>
-                <a href="#section5-3" class="nav-btn">5.3 共享坐标轴</a>
-                <a href="#section5-4" class="nav-btn">5.4 子图布局</a>
+                <a href="#section6-1" class="nav-btn active">6.1 坐标轴概述</a>
+                <a href="#section6-2" class="nav-btn">6.2 自定义位置</a>
+                <a href="#section6-3" class="nav-btn">6.3 定制刻度</a>
+                <a href="#section6-4" class="nav-btn">6.4 隐藏轴脊</a>
+                <a href="#section6-5" class="nav-btn">6.5 移动轴脊</a>
             </nav>
         </div>
     </header>
@@ -353,154 +345,192 @@
     <main class="main">
         <div class="container">
             <section class="hero">
-                <h1>第五章数据可视化平台</h1>
-                <p>基于第五章精确教学数据的子图绘制与布局管理</p>
-                <p><strong>学号：022340614 | 仓库：022340614/022340614 | 安全稳定版本</strong></p>
+                <h1>第六章坐标轴定制平台</h1>
+                <p>基于第六章坐标轴定制技术的交互式数据可视化平台</p>
+                <p><strong>学号：022340614 | 安全稳定版本</strong></p>
                 <div class="success" id="status-message">
-                    ✅ 平台已安全部署 - HTTPS加密传输
+                    ✅ 平台已安全部署 - 交互式坐标轴定制
                 </div>
             </section>
 
-            <!-- 5.1 绘制固定区域的子图 -->
-            <section id="section5-1" class="section">
-                <h2 class="section-title">5.1 绘制固定区域的子图</h2>
+            <!-- 6.1 坐标轴概述 -->
+            <section id="section6-1" class="section">
+                <h2 class="section-title">6.1 坐标轴概述</h2>
+                <p>理解坐标轴的基本结构和组成要素，包括四个轴脊（上、下、左、右）及其功能。</p>
                 
-                <h3>5.1.2 实例1：某工厂产品A与产品B去年的销售额分析</h3>
-                <div class="chart-container" id="chart5-1-2">
+                <div class="chart-container" id="chart6-1">
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
                         <div class="loading"></div>
-                        <span style="margin-left: 1rem;">加载图表数据...</span>
+                        <span style="margin-left: 1rem;">加载坐标轴结构图...</span>
                     </div>
                 </div>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>月份</th><th>产品A销售额(亿元)</th><th>产品B销售额(亿元)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1月</td><td>20</td><td>17</td></tr>
-                        <tr><td>2月</td><td>28</td><td>22</td></tr>
-                        <tr><td>3月</td><td>23</td><td>39</td></tr>
-                        <tr><td>4月</td><td>16</td><td>26</td></tr>
-                        <tr><td>5月</td><td>29</td><td>35</td></tr>
-                        <tr><td>6月</td><td>36</td><td>23</td></tr>
-                        <tr><td>7月</td><td>39</td><td>25</td></tr>
-                        <tr><td>8月</td><td>33</td><td>27</td></tr>
-                        <tr><td>9月</td><td>31</td><td>29</td></tr>
-                        <tr><td>10月</td><td>19</td><td>38</td></tr>
-                        <tr><td>11月</td><td>21</td><td>28</td></tr>
-                        <tr><td>12月</td><td>25</td><td>20</td></tr>
-                    </tbody>
-                </table>
 
-                <h3>5.1.4 实例2：部分国家养猫与养狗人群比例分析</h3>
-                <div class="chart-container" id="chart5-1-4">
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
-                        <div class="loading"></div>
-                        <span style="margin-left: 1rem;">加载图表数据...</span>
+                <div class="control-panel">
+                    <h3>坐标轴结构控制</h3>
+                    <div class="control-group">
+                        <label class="control-label">显示轴脊：</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-top" checked> 上轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-bottom" checked> 下轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-left" checked> 左轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-right" checked> 右轴脊
+                            </label>
+                        </div>
                     </div>
                 </div>
-                
-                <button class="btn" onclick="toggleChartOrientation()">
-                    <span>🔄</span>切换图表方向
-                </button>
-                <button class="btn btn-secondary" onclick="exportChartData('5.1')">
-                    <span>📥</span>导出数据
-                </button>
             </section>
 
-            <!-- 5.2 绘制自定义区域的子图 -->
-            <section id="section5-2" class="section">
-                <h2 class="section-title">5.2 绘制自定义区域的子图</h2>
+            <!-- 6.2 向任意位置添加坐标轴 -->
+            <section id="section6-2" class="section">
+                <h2 class="section-title">6.2 向任意位置添加坐标轴</h2>
+                <p>通过自定义坐标轴位置，实现在图表任意位置添加多个坐标轴。</p>
                 
-                <h3>5.2.2 实例3：2017年与2018年抖音用户分析</h3>
-                <div class="chart-container" id="chart5-2-2">
+                <div class="chart-container" id="chart6-2">
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
                         <div class="loading"></div>
-                        <span style="margin-left: 1rem;">加载图表数据...</span>
+                        <span style="margin-left: 1rem;">加载多坐标轴图表...</span>
                     </div>
                 </div>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>地区</th><th>2017年用户比例(%)</th><th>2018年用户比例(%)</th><th>增长倍数</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>一线城市</td><td>21</td><td>13</td><td>51</td></tr>
-                        <tr><td>二线城市</td><td>35</td><td>32</td><td>73</td></tr>
-                        <tr><td>三线城市</td><td>22</td><td>27</td><td>99</td></tr>
-                        <tr><td>四线及以外</td><td>19</td><td>27</td><td>132</td></tr>
-                        <tr><td>其他国家及地区</td><td>3</td><td>1</td><td>45</td></tr>
-                    </tbody>
-                </table>
+
+                <div class="control-panel">
+                    <h3>坐标轴位置控制</h3>
+                    <div class="control-group">
+                        <label class="control-label">坐标轴1位置 (x, y, 宽度, 高度)：</label>
+                        <input type="range" class="slider" id="axis1-x" min="0" max="100" value="20">
+                        <input type="range" class="slider" id="axis1-y" min="0" max="100" value="50">
+                        <input type="range" class="slider" id="axis1-w" min="10" max="50" value="30">
+                        <input type="range" class="slider" id="axis1-h" min="10" max="50" value="30">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">坐标轴2位置 (x, y, 宽度, 高度)：</label>
+                        <input type="range" class="slider" id="axis2-x" min="0" max="100" value="60">
+                        <input type="range" class="slider" id="axis2-y" min="0" max="100" value="40">
+                        <input type="range" class="slider" id="axis2-w" min="10" max="50" value="20">
+                        <input type="range" class="slider" id="axis2-h" min="10" max="50" value="20">
+                    </div>
+                </div>
             </section>
 
-            <!-- 5.3 共享子图的坐标轴 -->
-            <section id="section5-3" class="section">
-                <h2 class="section-title">5.3 共享子图的坐标轴</h2>
+            <!-- 6.3 定制刻度 -->
+            <section id="section6-3" class="section">
+                <h2 class="section-title">6.3 定制刻度</h2>
+                <p>定制刻度的位置、格式和样式，包括时间格式刻度和自定义刻度样式。</p>
                 
-                <h3>5.3.3 实例4：某地区全年平均气温与降水量、蒸发量的关系</h3>
-                <div class="chart-container" id="chart5-3-3">
+                <h3>6.3.3 实例1：深圳市24小时的平均风速</h3>
+                <div class="chart-container" id="chart6-3-1">
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
                         <div class="loading"></div>
-                        <span style="margin-left: 1rem;">加载图表数据...</span>
+                        <span style="margin-left: 1rem;">加载风速数据图表...</span>
                     </div>
                 </div>
-                
+
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>月份</th><th>平均气温(°C)</th><th>降水量(ml)</th><th>蒸发量(ml)</th>
+                            <th>时间</th><th>平均风速(km/h)</th><th>时间</th><th>平均风速(km/h)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>1月</td><td>2.0</td><td>2.6</td><td>2.0</td></tr>
-                        <tr><td>2月</td><td>2.2</td><td>5.9</td><td>4.9</td></tr>
-                        <tr><td>3月</td><td>3.3</td><td>9.0</td><td>7.0</td></tr>
-                        <tr><td>4月</td><td>4.5</td><td>26.4</td><td>23.2</td></tr>
-                        <tr><td>5月</td><td>6.3</td><td>28.7</td><td>25.6</td></tr>
-                        <tr><td>6月</td><td>10.2</td><td>70.7</td><td>76.7</td></tr>
-                        <tr><td>7月</td><td>20.3</td><td>175.6</td><td>135.6</td></tr>
-                        <tr><td>8月</td><td>33.4</td><td>182.2</td><td>162.2</td></tr>
-                        <tr><td>9月</td><td>23.0</td><td>48.7</td><td>32.6</td></tr>
-                        <tr><td>10月</td><td>16.5</td><td>18.8</td><td>20.0</td></tr>
-                        <tr><td>11月</td><td>12.0</td><td>6.0</td><td>6.4</td></tr>
-                        <tr><td>12月</td><td>6.2</td><td>2.3</td><td>3.3</td></tr>
+                        <tr><td>00:00</td><td>7</td><td>12:00</td><td>22</td></tr>
+                        <tr><td>02:00</td><td>9</td><td>14:00</td><td>11</td></tr>
+                        <tr><td>04:00</td><td>11</td><td>16:00</td><td>10</td></tr>
+                        <tr><td>06:00</td><td>14</td><td>18:00</td><td>11</td></tr>
+                        <tr><td>08:00</td><td>8</td><td>20:00</td><td>11</td></tr>
+                        <tr><td>10:00</td><td>15</td><td>22:00</td><td>13</td></tr>
+                        <tr><td colspan="4">次日00:00</td><td>8</td></tr>
                     </tbody>
                 </table>
+
+                <div class="control-panel">
+                    <h3>刻度定制控制</h3>
+                    <div class="control-group">
+                        <label class="control-label">刻度方向：</label>
+                        <select id="tick-direction" class="btn">
+                            <option value="out">向外</option>
+                            <option value="in">向内</option>
+                            <option value="inout">双向</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">刻度长度：</label>
+                        <input type="range" class="slider" id="tick-length" min="2" max="12" value="6">
+                    </div>
+                    <div class="control-label">刻度宽度：</label>
+                        <input type="range" class="slider" id="tick-width" min="1" max="5" value="2">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">标签旋转角度：</label>
+                        <input type="range" class="slider" id="label-rotation" min="0" max="90" value="45">
+                    </div>
+                </div>
             </section>
 
-            <!-- 5.4 子图的布局 -->
-            <section id="section5-4" class="section">
-                <h2 class="section-title">5.4 子图的布局</h2>
+            <!-- 6.4 隐藏轴脊 -->
+            <section id="section6-4" class="section">
+                <h2 class="section-title">6.4 隐藏轴脊</h2>
+                <p>完全或部分隐藏坐标轴脊线，创建简洁的图表布局。</p>
                 
-                <h3>5.4.4 实例5：2018年上半年某品牌汽车销售情况</h3>
-                <div class="chart-container" id="chart5-4-4">
+                <h3>6.4.3 实例2：深圳市24小时的平均风速（隐藏部分轴脊）</h3>
+                <div class="chart-container" id="chart6-4">
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
                         <div class="loading"></div>
-                        <span style="margin-left: 1rem;">加载图表数据...</span>
+                        <span style="margin-left: 1rem;">加载隐藏轴脊图表...</span>
                     </div>
                 </div>
+
+                <div class="control-panel">
+                    <h3>轴脊隐藏控制</h3>
+                    <div class="control-group">
+                        <label class="control-label">隐藏轴脊：</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="hide-top"> 隐藏上轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="hide-right" checked> 隐藏右轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="hide-bottom"> 隐藏下轴脊
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="hide-left"> 隐藏左轴脊
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6.5 移动轴脊 -->
+            <section id="section6-5" class="section">
+                <h2 class="section-title">6.5 移动轴脊</h2>
+                <p>调整坐标轴脊线的位置，创建独特的图表布局效果。</p>
                 
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>月份</th><th>销售额(亿元)</th><th>城市</th><th>销量(辆)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1月</td><td>2150</td><td>北京</td><td>83775</td></tr>
-                        <tr><td>2月</td><td>1050</td><td>上海</td><td>62860</td></tr>
-                        <tr><td>3月</td><td>1560</td><td>广州</td><td>59176</td></tr>
-                        <tr><td>4月</td><td>1480</td><td>深圳</td><td>64205</td></tr>
-                        <tr><td>5月</td><td>1530</td><td>浙江</td><td>48671</td></tr>
-                        <tr><td>6月</td><td>1490</td><td>山东</td><td>39968</td></tr>
-                    </tbody>
-                </table>
+                <h3>6.5.2 实例3：正弦与余弦曲线</h3>
+                <div class="chart-container" id="chart6-5">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                        <div class="loading"></div>
+                        <span style="margin-left: 1rem;">加载正弦余弦曲线...</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <h3>轴脊位置控制</h3>
+                    <div class="control-group">
+                        <label class="control-label">左轴脊位置：</label>
+                        <input type="range" class="slider" id="left-spine-pos" min="-6" max="6" value="0" step="0.1">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">下轴脊位置：</label>
+                        <input type="range" class="slider" id="bottom-spine-pos" min="-1" max="1" value="0" step="0.1">
+                    </div>
+                </div>
             </section>
 
             <!-- 性能监控 -->
@@ -509,7 +539,7 @@
                 <div id="performance-metrics">
                     <p>加载时间: <span id="load-time">计算中...</span></p>
                     <p>图表数量: <span id="chart-count">5</span> 个</p>
-                    <p>数据点总数: <span id="data-points">56</span> 个</p>
+                    <p>交互控件: <span id="control-count">15</span> 个</p>
                     <p>安全状态: <span class="success">✅ 已启用HTTPS加密</span></p>
                 </div>
             </section>
@@ -518,10 +548,10 @@
 
     <footer class="footer">
         <div class="container">
-            <p>第五章数据可视化平台 - 基于精确教学数据开发</p>
-            <p>学号：<strong>022340614</strong> | 仓库：<strong>022340614/022340614</strong> | 安全稳定版本</p>
+            <p>第六章坐标轴定制平台 - 基于精确教学数据开发</p>
+            <p>学号：<strong>022340614</strong> | 安全稳定版本</p>
             <p style="font-size: 0.875rem; opacity: 0.7; margin-top: 1rem;">
-                包含5.1固定区域子图、5.2自定义区域子图、5.3共享坐标轴、5.4子图布局 | 永久公网访问
+                包含6.1坐标轴概述、6.2自定义位置、6.3定制刻度、6.4隐藏轴脊、6.5移动轴脊 | 交互式定制功能
             </p>
         </div>
     </footer>
@@ -530,189 +560,51 @@
     <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
     
     <script>
-        // 第五章精确数据
-        const chapter5ExactData = {
-            // 5.1.2 产品销售额数据
-            productSales: {
-                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                productA: [20, 28, 23, 16, 29, 36, 39, 33, 31, 19, 21, 25],
-                productB: [17, 22, 39, 26, 35, 23, 25, 27, 29, 38, 28, 20]
+        // 第六章精确数据
+        const chapter6ExactData = {
+            // 6.3.3 深圳市24小时平均风速数据
+            shenzhenWind: {
+                times: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', 
+                       '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'],
+                speeds: [7, 9, 11, 14, 8, 15, 22, 11, 10, 11, 11, 13, 8]
             },
-            // 5.1.4 人群比例数据
-            population: {
-                countries: ['中国', '加拿大', '巴西', '澳大利亚', '日本', '墨西哥', '俄罗斯', '韩国', '瑞士', '土耳其', '英国', '美国'],
-                catOwners: [19, 33, 28, 29, 14, 24, 57, 6, 26, 15, 27, 39],
-                dogOwners: [25, 33, 58, 39, 15, 64, 29, 23, 22, 11, 27, 50]
-            },
-            // 5.2.2 抖音用户数据
-            douyin: {
-                cities: ['一线城市', '二线城市', '三线城市', '四线及以外', '其他国家及地区'],
-                data2017: [21, 35, 22, 19, 3],
-                data2018: [13, 32, 27, 27, 1],
-                growth: [51, 73, 99, 132, 45]
-            },
-            // 5.3.3 气温与水量数据
-            temperature: {
-                months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                temperature: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 33.4, 23.0, 16.5, 12.0, 6.2],
-                precipitation: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                evaporation: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-            },
-            // 5.4.4 汽车销售数据
-            carSales: {
-                months: ['1月', '2月', '3月', '4月', '5月', '6月'],
-                sales: [2150, 1050, 1560, 1480, 1530, 1490],
-                cities: ['北京', '上海', '广州', '深圳', '浙江', '山东'],
-                salesCount: [83775, 62860, 59176, 64205, 48671, 39968]
+            // 6.5.2 正弦余弦数据
+            trigData: {
+                x: Array.from({length: 100}, (_, i) => -2 * Math.PI + i * 4 * Math.PI / 99),
+                sin: [],
+                cos: []
             }
         };
 
-        let currentOrientation = 'horizontal';
+        // 计算三角函数数据
+        chapter6ExactData.trigData.sin = chapter6ExactData.trigData.x.map(x => Math.sin(x));
+        chapter6ExactData.trigData.cos = chapter6ExactData.trigData.x.map(x => Math.cos(x));
+
         let performanceStartTime = Date.now();
+        let currentCharts = {};
 
         // 初始化所有图表
         function initCharts() {
             try {
-                // 5.1.2 产品销售额图表
-                Plotly.newPlot('chart5-1-2', [
-                    {
-                        x: chapter5ExactData.productSales.months,
-                        y: chapter5ExactData.productSales.productA,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        name: '产品A',
-                        line: {color: '#FF6B6B', width: 3},
-                        marker: {size: 6}
-                    },
-                    {
-                        x: chapter5ExactData.productSales.months,
-                        y: chapter5ExactData.productSales.productB,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        name: '产品B',
-                        line: {color: '#4ECDC4', width: 3},
-                        marker: {size: 6}
-                    }
-                ], {
-                    title: '5.1.2 产品A与产品B销售额分析 - 022340614',
-                    xaxis: {title: '月份'},
-                    yaxis: {title: '销售额(亿元)'},
-                    showlegend: true,
-                    legend: {x: 0, y: 1}
-                });
-
-                // 5.1.4 人群比例图表
-                updatePopulationChart();
-
-                // 5.2.2 抖音用户分析图表
-                Plotly.newPlot('chart5-2-2', [
-                    {
-                        x: chapter5ExactData.douyin.cities,
-                        y: chapter5ExactData.douyin.data2017,
-                        type: 'bar',
-                        name: '2017年',
-                        marker: {color: '#667eea'}
-                    },
-                    {
-                        x: chapter5ExactData.douyin.cities,
-                        y: chapter5ExactData.douyin.data2018,
-                        type: 'bar',
-                        name: '2018年',
-                        marker: {color: '#764ba2'}
-                    },
-                    {
-                        x: chapter5ExactData.douyin.cities,
-                        y: chapter5ExactData.douyin.growth,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        name: '增长倍数',
-                        yaxis: 'y2',
-                        line: {color: '#FF6B6B', width: 3},
-                        marker: {size: 6}
-                    }
-                ], {
-                    title: '5.2.2 2017年与2018年抖音用户分析 - 022340614',
-                    xaxis: {title: '地区'},
-                    yaxis: {title: '用户比例(%)'},
-                    yaxis2: {
-                        title: '增长倍数',
-                        side: 'right',
-                        overlaying: 'y'
-                    },
-                    showlegend: true
-                });
-
-                // 5.3.3 气温与水量关系图表
-                Plotly.newPlot('chart5-3-3', [
-                    {
-                        x: chapter5ExactData.temperature.months,
-                        y: chapter5ExactData.temperature.temperature,
-                        type: 'scatter',
-                        mode: 'lines',
-                        name: '平均气温(°C)',
-                        yaxis: 'y1',
-                        line: {color: '#FF6B6B', width: 3}
-                    },
-                    {
-                        x: chapter5ExactData.temperature.months,
-                        y: chapter5ExactData.temperature.precipitation,
-                        type: 'bar',
-                        name: '降水量(ml)',
-                        yaxis: 'y2',
-                        marker: {color: '#4ECDC4', opacity: 0.7}
-                    },
-                    {
-                        x: chapter5ExactData.temperature.months,
-                        y: chapter5ExactData.temperature.evaporation,
-                        type: 'bar',
-                        name: '蒸发量(ml)',
-                        yaxis: 'y2',
-                        marker: {color: '#FFA500', opacity: 0.7}
-                    }
-                ], {
-                    title: '5.3.3 平均气温与降水量、蒸发量的关系 - 022340614',
-                    xaxis: {title: '月份'},
-                    yaxis: {title: '气温(°C)', side: 'left'},
-                    yaxis2: {
-                        title: '水量(ml)',
-                        side: 'right',
-                        overlaying: 'y'
-                    },
-                    showlegend: true
-                });
-
-                // 5.4.4 汽车销售分析图表
-                Plotly.newPlot('chart5-4-4', [
-                    {
-                        x: chapter5ExactData.carSales.months,
-                        y: chapter5ExactData.carSales.sales,
-                        type: 'bar',
-                        name: '月销售额(亿元)',
-                        marker: {color: '#3299CC'}
-                    },
-                    {
-                        x: chapter5ExactData.carSales.cities,
-                        y: chapter5ExactData.carSales.salesCount,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        name: '城市销量(辆)',
-                        yaxis: 'y2',
-                        line: {color: '#FF6B6B', width: 3},
-                        marker: {size: 6}
-                    }
-                ], {
-                    title: '5.4.4 2018年上半年某品牌汽车销售情况 - 022340614',
-                    xaxis: {title: '月份/城市'},
-                    yaxis: {title: '销售额(亿元)', side: 'left'},
-                    yaxis2: {
-                        title: '销量(辆)',
-                        side: 'right',
-                        overlaying: 'y'
-                    },
-                    showlegend: true
-                });
-
+                // 6.1 坐标轴概述图表
+                initAxisStructureChart();
+                
+                // 6.2 自定义坐标轴位置
+                initCustomAxesChart();
+                
+                // 6.3.3 深圳市风速图表
+                initWindSpeedChart();
+                
+                // 6.4 隐藏轴脊图表
+                initHiddenSpinesChart();
+                
+                // 6.5 移动轴脊图表
+                initMovedSpinesChart();
+                
                 updatePerformanceMetrics();
+                
+                // 绑定控制事件
+                bindControlEvents();
                 
             } catch (error) {
                 console.error('图表初始化错误:', error);
@@ -721,86 +613,336 @@
             }
         }
 
-        // 更新人群比例图表
-        function updatePopulationChart() {
-            Plotly.newPlot('chart5-1-4', [
-                {
-                    y: chapter5ExactData.population.countries,
-                    x: chapter5ExactData.population.catOwners,
-                    type: 'bar',
-                    name: '养猫人群',
-                    orientation: currentOrientation,
-                    marker: {color: '#FFA500'}
+        // 6.1 坐标轴结构图表
+        function initAxisStructureChart() {
+            const trace = {
+                x: [1, 2, 3, 4, 5],
+                y: [1, 3, 2, 4, 3],
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: '#4f46e5', width: 3},
+                marker: {size: 8}
+            };
+
+            const layout = {
+                title: '6.1 坐标轴结构示意图 - 022340614',
+                xaxis: {
+                    title: 'X轴',
+                    showline: true,
+                    mirror: true
                 },
-                {
-                    y: chapter5ExactData.population.countries,
-                    x: chapter5ExactData.population.dogOwners,
-                    type: 'bar',
-                    name: '养狗人群',
-                    orientation: currentOrientation,
-                    marker: {color: '#20B2AA'}
+                yaxis: {
+                    title: 'Y轴',
+                    showline: true,
+                    mirror: true
+                },
+                showlegend: false
+            };
+
+            currentCharts['chart6-1'] = Plotly.newPlot('chart6-1', [trace], layout);
+        }
+
+        // 6.2 自定义坐标轴位置
+        function initCustomAxesChart() {
+            // 主图表
+            const trace1 = {
+                x: [1, 2, 3, 4, 5],
+                y: [10, 11, 12, 13, 14],
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#4f46e5', width: 2},
+                xaxis: 'x1',
+                yaxis: 'y1'
+            };
+
+            // 子图表1
+            const trace2 = {
+                x: [1, 2, 3],
+                y: [1, 3, 2],
+                type: 'bar',
+                marker: {color: '#10b981'},
+                xaxis: 'x2',
+                yaxis: 'y2'
+            };
+
+            // 子图表2
+            const trace3 = {
+                x: [1, 2, 3, 4],
+                y: [4, 2, 3, 1],
+                type: 'scatter',
+                mode: 'markers',
+                marker: {size: 10, color: '#f59e0b'},
+                xaxis: 'x3',
+                yaxis: 'y3'
+            };
+
+            const layout = {
+                title: '6.2 自定义坐标轴位置 - 022340614',
+                xaxis: {
+                    domain: [0, 1],
+                    title: '主X轴'
+                },
+                yaxis: {
+                    domain: [0, 1],
+                    title: '主Y轴'
+                },
+                xaxis2: {
+                    domain: [0.2, 0.5],
+                    anchor: 'y2'
+                },
+                yaxis2: {
+                    domain: [0.5, 0.8],
+                    anchor: 'x2'
+                },
+                xaxis3: {
+                    domain: [0.6, 0.9],
+                    anchor: 'y3'
+                },
+                yaxis3: {
+                    domain: [0.4, 0.7],
+                    anchor: 'x3'
                 }
-            ], {
-                title: `5.1.4 部分国家养猫与养狗人群比例分析 - 022340614`,
-                xaxis: {title: currentOrientation === 'horizontal' ? '人群比例(%)' : '国家'},
-                yaxis: {title: currentOrientation === 'horizontal' ? '国家' : '人群比例(%)'}
+            };
+
+            currentCharts['chart6-2'] = Plotly.newPlot('chart6-2', [trace1, trace2, trace3], layout);
+        }
+
+        // 6.3.3 深圳市风速图表
+        function initWindSpeedChart() {
+            const trace = {
+                x: chapter6ExactData.shenzhenWind.times,
+                y: chapter6ExactData.shenzhenWind.speeds,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: '#ef4444', width: 3, shape: 'spline'},
+                marker: {
+                    size: 8,
+                    color: '#f59e0b',
+                    symbol: 'triangle-up'
+                }
+            };
+
+            const layout = {
+                title: '6.3.3 深圳市24小时平均风速 - 022340614',
+                xaxis: {
+                    title: '时间 (小时)',
+                    tickangle: 45,
+                    ticklen: 6,
+                    tickwidth: 2
+                },
+                yaxis: {
+                    title: '平均风速 (km/h)',
+                    ticklen: 6,
+                    tickwidth: 2
+                }
+            };
+
+            currentCharts['chart6-3-1'] = Plotly.newPlot('chart6-3-1', [trace], layout);
+        }
+
+        // 6.4 隐藏轴脊图表
+        function initHiddenSpinesChart() {
+            const trace = {
+                x: chapter6ExactData.shenzhenWind.times,
+                y: chapter6ExactData.shenzhenWind.speeds,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: '#06b6d4', width: 3},
+                marker: {size: 8, color: '#4f46e5'}
+            };
+
+            const layout = {
+                title: '6.4.3 深圳市风速（隐藏部分轴脊） - 022340614',
+                xaxis: {
+                    title: '时间 (小时)',
+                    showline: true,
+                    mirror: false
+                },
+                yaxis: {
+                    title: '平均风速 (km/h)',
+                    showline: true,
+                    mirror: false
+                }
+            };
+
+            currentCharts['chart6-4'] = Plotly.newPlot('chart6-4', [trace], layout);
+        }
+
+        // 6.5 移动轴脊图表
+        function initMovedSpinesChart() {
+            const trace1 = {
+                x: chapter6ExactData.trigData.x,
+                y: chapter6ExactData.trigData.sin,
+                type: 'scatter',
+                mode: 'lines',
+                name: '正弦曲线',
+                line: {color: '#4f46e5', width: 3}
+            };
+
+            const trace2 = {
+                x: chapter6ExactData.trigData.x,
+                y: chapter6ExactData.trigData.cos,
+                type: 'scatter',
+                mode: 'lines',
+                name: '余弦曲线',
+                line: {color: '#10b981', width: 3}
+            };
+
+            const layout = {
+                title: '6.5.2 正弦与余弦曲线 - 022340614',
+                xaxis: {
+                    title: 'X轴',
+                    tickvals: [-2*Math.PI, -3*Math.PI/2, -Math.PI, -Math.PI/2, 0, Math.PI/2, Math.PI, 3*Math.PI/2, 2*Math.PI],
+                    ticktext: ['-2π', '-3π/2', '-π', '-π/2', '0', 'π/2', 'π', '3π/2', '2π']
+                },
+                yaxis: {
+                    title: 'Y轴',
+                    tickvals: [-1, -0.5, 0, 0.5, 1]
+                },
+                showlegend: true
+            };
+
+            currentCharts['chart6-5'] = Plotly.newPlot('chart6-5', [trace1, trace2], layout);
+        }
+
+        // 绑定控制事件
+        function bindControlEvents() {
+            // 6.1 轴脊显示控制
+            const spineControls = ['show-top', 'show-bottom', 'show-left', 'show-right'];
+            spineControls.forEach(controlId => {
+                document.getElementById(controlId).addEventListener('change', updateSpineVisibility);
+            });
+
+            // 6.2 坐标轴位置控制
+            const positionControls = ['axis1-x', 'axis1-y', 'axis1-w', 'axis1-h', 'axis2-x', 'axis2-y', 'axis2-w', 'axis2-h'];
+            positionControls.forEach(controlId => {
+                document.getElementById(controlId).addEventListener('input', updateAxisPositions);
+            });
+
+            // 6.3 刻度定制控制
+            const tickControls = ['tick-direction', 'tick-length', 'tick-width', 'label-rotation'];
+            tickControls.forEach(controlId => {
+                document.getElementById(controlId).addEventListener('input', updateTickStyles);
+            });
+
+            // 6.4 轴脊隐藏控制
+            const hideControls = ['hide-top', 'hide-right', 'hide-bottom', 'hide-left'];
+            hideControls.forEach(controlId => {
+                document.getElementById(controlId).addEventListener('change', updateHiddenSpines);
+            });
+
+            // 6.5 轴脊位置控制
+            const spinePosControls = ['left-spine-pos', 'bottom-spine-pos'];
+            spinePosControls.forEach(controlId => {
+                document.getElementById(controlId).addEventListener('input', updateSpinePositions);
             });
         }
 
-        // 切换图表方向
-        function toggleChartOrientation() {
-            currentOrientation = currentOrientation === 'horizontal' ? 'vertical' : 'horizontal';
-            updatePopulationChart();
+        // 更新轴脊可见性
+        function updateSpineVisibility() {
+            const layoutUpdate = {
+                xaxis: {
+                    showline: document.getElementById('show-bottom').checked,
+                    mirror: document.getElementById('show-top').checked ? true : false
+                },
+                yaxis: {
+                    showline: document.getElementById('show-left').checked,
+                    mirror: document.getElementById('show-right').checked ? true : false
+                }
+            };
+            Plotly.relayout('chart6-1', layoutUpdate);
         }
 
-        // 导出数据
-        function exportChartData(section) {
-            const data = chapter5ExactData;
-            let csvContent = "data:text/csv;charset=utf-8,";
+        // 更新坐标轴位置
+        function updateAxisPositions() {
+            const x1 = parseInt(document.getElementById('axis1-x').value) / 100;
+            const y1 = parseInt(document.getElementById('axis1-y').value) / 100;
+            const w1 = parseInt(document.getElementById('axis1-w').value) / 100;
+            const h1 = parseInt(document.getElementById('axis1-h').value) / 100;
             
-            switch(section) {
-                case '5.1':
-                    csvContent += "月份,产品A销售额,产品B销售额\n";
-                    data.productSales.months.forEach((month, i) => {
-                        csvContent += `${month},${data.productSales.productA[i]},${data.productSales.productB[i]}\n`;
-                    });
-                    break;
-                case '5.2':
-                    csvContent += "地区,2017年用户比例,2018年用户比例,增长倍数\n";
-                    data.douyin.cities.forEach((city, i) => {
-                        csvContent += `${city},${data.douyin.data2017[i]},${data.douyin.data2018[i]},${data.douyin.growth[i]}\n`;
-                    });
-                    break;
-            }
-            
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `第五章数据_${section}_022340614.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const x2 = parseInt(document.getElementById('axis2-x').value) / 100;
+            const y2 = parseInt(document.getElementById('axis2-y').value) / 100;
+            const w2 = parseInt(document.getElementById('axis2-w').value) / 100;
+            const h2 = parseInt(document.getElementById('axis2-h').value) / 100;
+
+            const layoutUpdate = {
+                xaxis2: {domain: [x1, x1 + w1]},
+                yaxis2: {domain: [y1, y1 + h1]},
+                xaxis3: {domain: [x2, x2 + w2]},
+                yaxis3: {domain: [y2, y2 + h2]}
+            };
+            Plotly.relayout('chart6-2', layoutUpdate);
+        }
+
+        // 更新刻度样式
+        function updateTickStyles() {
+            const direction = document.getElementById('tick-direction').value;
+            const length = parseInt(document.getElementById('tick-length').value);
+            const width = parseInt(document.getElementById('tick-width').value);
+            const rotation = parseInt(document.getElementById('label-rotation').value);
+
+            const layoutUpdate = {
+                xaxis: {
+                    ticklen: length,
+                    tickwidth: width,
+                    tickangle: rotation
+                },
+                yaxis: {
+                    ticklen: length,
+                    tickwidth: width
+                }
+            };
+            Plotly.relayout('chart6-3-1', layoutUpdate);
+        }
+
+        // 更新隐藏轴脊
+        function updateHiddenSpines() {
+            const hideTop = document.getElementById('hide-top').checked;
+            const hideRight = document.getElementById('hide-right').checked;
+            const hideBottom = document.getElementById('hide-bottom').checked;
+            const hideLeft = document.getElementById('hide-left').checked;
+
+            const layoutUpdate = {
+                xaxis: {
+                    showline: !hideBottom,
+                    mirror: hideTop ? false : true
+                },
+                yaxis: {
+                    showline: !hideLeft,
+                    mirror: hideRight ? false : true
+                }
+            };
+            Plotly.relayout('chart6-4', layoutUpdate);
+        }
+
+        // 更新轴脊位置
+        function updateSpinePositions() {
+            const leftPos = parseFloat(document.getElementById('left-spine-pos').value);
+            const bottomPos = parseFloat(document.getElementById('bottom-spine-pos').value);
+
+            // 这里需要更复杂的逻辑来模拟轴脊移动效果
+            // 简化实现：调整图表边距来模拟效果
+            const layoutUpdate = {
+                margin: {
+                    l: Math.max(80, 80 + leftPos * 20),
+                    r: 80,
+                    b: Math.max(80, 80 + bottomPos * 20),
+                    t: 80
+                }
+            };
+            Plotly.relayout('chart6-5', layoutUpdate);
         }
 
         // 更新性能指标
         function updatePerformanceMetrics() {
             const loadTime = Date.now() - performanceStartTime;
             document.getElementById('load-time').textContent = `${loadTime}ms`;
-            
-            // 计算数据点总数
-            const totalDataPoints = 
-                chapter5ExactData.productSales.productA.length * 2 +
-                chapter5ExactData.population.catOwners.length * 2 +
-                chapter5ExactData.douyin.data2017.length * 3 +
-                chapter5ExactData.temperature.temperature.length * 3 +
-                chapter5ExactData.carSales.sales.length * 2;
-                
-            document.getElementById('data-points').textContent = totalDataPoints;
+            document.getElementById('control-count').textContent = '15';
         }
 
         // 页面加载初始化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('第五章数据可视化平台加载 - 022340614');
+            console.log('第六章坐标轴定制平台加载 - 022340614');
             
             // 检查HTTPS
             if (location.protocol !== 'https:') {
@@ -815,12 +957,6 @@
                 document.getElementById('status-message').className = 'error';
                 document.getElementById('status-message').innerHTML = '❌ Plotly.js加载失败，请检查网络连接';
             }
-            
-            // 性能监控
-            window.addEventListener('load', () => {
-                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-                console.log('页面完整加载时间: ' + loadTime + 'ms');
-            });
         });
 
         // 错误处理
